@@ -10,7 +10,7 @@ import (
 	"os"
 	"path"
 	"strings"
-	"tackle2-addon-jkube/parser"
+	"tackle2-addon-jkube/pom"
 )
 
 type Jkube struct {
