@@ -1,4 +1,4 @@
-module tackle2-addon-jkube
+module github.com/mundra-ankur/tackle2-addon-jkube
 
 go 1.19
 

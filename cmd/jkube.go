@@ -7,10 +7,10 @@ import (
 	"github.com/konveyor/tackle2-addon/command"
 	"github.com/konveyor/tackle2-addon/repository"
 	"github.com/konveyor/tackle2-hub/api"
+	"github.com/mundra-ankur/tackle2-addon-jkube/pom"
 	"os"
 	"path"
 	"strings"
-	"tackle2-addon-jkube/pom"
 )
 
 type Jkube struct {
