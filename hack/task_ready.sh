@@ -1,10 +1,10 @@
 #!/bin/bash
 
-set -o errexit
-set -o nounset
-set -o xtrace
+#set -o errexit
+#set -o nounset
+#set -o xtrace
 
-host="${HOST:-http://192.168.49.2/hub}"
+host="${HOST:-localhost:8080/hub}"
 
 # Make a request to hub
 request_cmd="$(curl -i -o - -X POST ${host}/tasks -d \

@@ -4,7 +4,7 @@ set -o errexit
 set -o nounset
 set -o xtrace
 
-host="${HOST:-http://192.168.49.2/hub}"
+host="${HOST:-localhost:8080/hub}"
 
 # Create a Stake Holder Group
 curl -X POST ${host}/stakeholdergroups -d \
