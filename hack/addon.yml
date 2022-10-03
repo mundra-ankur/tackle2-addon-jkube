@@ -5,4 +5,4 @@ metadata:
   name: jkube
   namespace: konveyor-tackle
 spec:
-  image: tackle2-addon-jkube:latest
+  image: quay.io/amundra/tackle2-addon-jkube:latest
