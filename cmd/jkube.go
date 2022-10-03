@@ -146,7 +146,7 @@ func (r *Jkube) copyResources(groupId string, artifactId string) (err error) {
 	}
 
 	// Copy the Dockerfile to the output directory
-	group := strings.ToLower(strings.Split(groupId, ".")[0])
+	group := strings.ToLower(strings.Split(groupId, ".")[1])
 	artifactId = strings.ToLower(artifactId)
 	cmd = command.Command{
 		Path: "/usr/bin/cp",
