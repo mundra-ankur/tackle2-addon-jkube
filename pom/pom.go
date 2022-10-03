@@ -11,7 +11,12 @@ func Parse(path string) (*Pom, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
+	defer func(file *os.File) {
+		err := file.Close()
+		if err != nil {
+			panic(err)
+		}
+	}(file)
 
 	b, _ := io.ReadAll(file)
 	var project Pom
