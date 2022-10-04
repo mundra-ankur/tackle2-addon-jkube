@@ -16,7 +16,7 @@ RUN echo -e "[WandiscoSVN]" \
  "\nenabled=1" \
  "\ngpgcheck=0" > /etc/yum.repos.d/wandisco.repo
 RUN microdnf -y install \
-  java-11-openjdk-headless \
+  java-17-openjdk-headless \
   openssh-clients \
   unzip \
   wget \
@@ -26,9 +26,9 @@ RUN microdnf -y install \
  && microdnf -y clean all
 
 ENV HOME=/working \
-    JAVA_HOME="/usr/lib/jvm/jre-11" \
+    JAVA_HOME="/usr/lib/jvm/jre-17" \
     JAVA_VENDOR="openjdk" \
-    JAVA_VERSION="11"
+    JAVA_VERSION="17"
 WORKDIR /working
 COPY --from=builder /opt/app-root/src/bin/addon /usr/local/bin/addon
 ENTRYPOINT ["/usr/local/bin/addon"]
