@@ -103,7 +103,7 @@ func (r *Jkube) buildMvnProject() (err error) {
 	// Run mvn k8s:build
 	cmd := command.Command{
 		Path:    "./mvnw",
-		Options: []string{"k8s:build", "-Djkube.build.strategy=jib"},
+		Options: []string{"package", "k8s:build", "-Djkube.build.strategy=jib"},
 		Dir:     SourceDir,
 	}
 
@@ -159,7 +159,6 @@ func (r *Jkube) copyResources(groupId string, artifactId string) (err error) {
 	err = cmd.Run()
 	if err != nil {
 		fmt.Printf("Error copying Dockerfile %s", err)
-		return
 	}
 	return
 }
