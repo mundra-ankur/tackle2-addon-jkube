@@ -103,7 +103,7 @@ func (r *Jkube) buildMvnProject() (err error) {
 	// Run mvn k8s:build
 	cmd := command.Command{
 		Path:    "./mvnw",
-		Options: []string{"package", "k8s:build", "-Djkube.build.strategy=jib"},
+		Options: []string{"package", "-Dmaven.test.skip", "k8s:build", "-Djkube.build.strategy=jib"},
 		Dir:     SourceDir,
 	}
 
