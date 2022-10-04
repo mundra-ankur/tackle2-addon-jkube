@@ -31,7 +31,7 @@ ENV HOME=/working \
     JAVA_VERSION="17"
 RUN export JAVA_HOME \
  && export JAVA_VENDOR \
- && export JAVA_VERSION \
+ && export JAVA_VERSION
 
 WORKDIR /working
 COPY --from=builder /opt/app-root/src/bin/addon /usr/local/bin/addon
