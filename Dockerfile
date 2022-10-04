@@ -29,6 +29,10 @@ ENV HOME=/working \
     JAVA_HOME="/usr/lib/jvm/jre-17" \
     JAVA_VENDOR="openjdk" \
     JAVA_VERSION="17"
+RUN export JAVA_HOME \
+ && export JAVA_VENDOR \
+ && export JAVA_VERSION \
+
 WORKDIR /working
 COPY --from=builder /opt/app-root/src/bin/addon /usr/local/bin/addon
 ENTRYPOINT ["/usr/local/bin/addon"]
