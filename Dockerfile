@@ -15,23 +15,26 @@ RUN echo -e "[WandiscoSVN]" \
  "\nbaseurl=http://opensource.wandisco.com/centos/6/svn-1.9/RPMS/$basearch/" \
  "\nenabled=1" \
  "\ngpgcheck=0" > /etc/yum.repos.d/wandisco.repo
+
 RUN microdnf -y install \
-  java-17-openjdk-headless \
   openssh-clients \
   unzip \
   wget \
   git \
   subversion \
   maven \
- && microdnf -y clean all
+  tar\
+&& microdnf -y clean all
+
+RUN wget https://download.java.net/openjdk/jdk17/ri/openjdk-17+35_linux-x64_bin.tar.gz \
+ && tar -xvf openjdk-17+35_linux-x64_bin.tar.gz \
+ && mv jdk-17 /usr/lib/jvm/ \
+ && rm openjdk-17+35_linux-x64_bin.tar.gz
 
 ENV HOME=/working \
-    JAVA_HOME="/usr/lib/jvm/jre-17" \
+    JAVA_HOME="/usr/lib/jvm/jdk-17" \
     JAVA_VENDOR="openjdk" \
     JAVA_VERSION="17"
-RUN export JAVA_HOME \
- && export JAVA_VENDOR \
- && export JAVA_VERSION
 
 WORKDIR /working
 COPY --from=builder /opt/app-root/src/bin/addon /usr/local/bin/addon

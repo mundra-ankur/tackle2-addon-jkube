@@ -100,29 +100,29 @@ func (r *Jkube) addJkubePlugin() (groupId string, artifactId string, err error) 
 }
 
 func (r *Jkube) buildMvnProject() (err error) {
-	// Run mvn k8s:build
+	// Build the maven project
 	cmd := command.Command{
 		Path:    "./mvnw",
-		Options: []string{"package", "-Dmaven.test.skip", "k8s:build", "-Djkube.build.strategy=jib"},
+		Options: []string{"package", "-Dmaven.test.skip", "--quiet"},
 		Dir:     SourceDir,
 	}
 
 	err = cmd.Run()
 	if err != nil {
-		fmt.Printf("Error running mvn k8s:build %s", err)
+		fmt.Printf("Error building maven project %s", err)
 		return
 	}
 
-	// Run mvn k8s:resource
+	// Run mvn k8s:build and mvn k8s:resource
 	cmd = command.Command{
 		Path:    "./mvnw",
-		Options: []string{"k8s:resource"},
+		Options: []string{"k8s:build", "-Djkube.build.strategy=jib", "k8s:resource"},
 		Dir:     SourceDir,
 	}
 
 	err = cmd.Run()
 	if err != nil {
-		fmt.Printf("Error running mvn k8s:resource %s", err)
+		fmt.Printf("Error running mvn k8s:build and k8s:resource %s", err)
 		return
 	}
 
