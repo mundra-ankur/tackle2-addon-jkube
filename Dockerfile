@@ -17,24 +17,23 @@ RUN echo -e "[WandiscoSVN]" \
  "\ngpgcheck=0" > /etc/yum.repos.d/wandisco.repo
 
 RUN microdnf -y install \
+  java-17-openjdk-devel\
   openssh-clients \
   unzip \
   wget \
   git \
   subversion \
   maven \
-  tar\
 && microdnf -y clean all
 
-RUN wget https://download.java.net/openjdk/jdk17/ri/openjdk-17+35_linux-x64_bin.tar.gz \
- && tar -xvf openjdk-17+35_linux-x64_bin.tar.gz \
- && mv jdk-17 /usr/lib/jvm/ \
- && rm openjdk-17+35_linux-x64_bin.tar.gz
-
 ENV HOME=/working \
-    JAVA_HOME="/usr/lib/jvm/jdk-17" \
+    JAVA_HOME="/usr/lib/jvm/jre-17" \
     JAVA_VENDOR="openjdk" \
     JAVA_VERSION="17"
+
+RUN /sbin/alternatives --set java /usr/lib/jvm/java-17-openjdk-17.0.4.1.1-2.el8_6.x86_64/bin/java
+RUN /sbin/alternatives --set javac /usr/lib/jvm/java-17-openjdk-17.0.4.1.1-2.el8_6.x86_64/bin/javac
+
 
 WORKDIR /working
 COPY --from=builder /opt/app-root/src/bin/addon /usr/local/bin/addon
