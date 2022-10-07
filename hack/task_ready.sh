@@ -13,7 +13,7 @@ request_cmd="$(curl -i -o - -X POST ${host}/tasks -d \
     "state": "Ready",
     "locator": "jkube",
     "addon": "jkube",
-    "application": {"id": 1},
+    "application": {"id": 2},
     "data": { "output": "/jkube/resources" }
 }')"
 
