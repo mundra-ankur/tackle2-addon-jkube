@@ -175,7 +175,19 @@ func (r *Jkube) commitResources(groupId string, artifactId string) (err error) {
 
 	cmd = command.Command{
 		Path:    "/usr/bin/git",
-		Options: []string{"commit", "-m", "Add k8s resources", "&&", "/usr/bin/git", "push"},
+		Options: []string{"commit", "-m", "Add k8s resources"},
+		Dir:     SourceDir,
+	}
+
+	err = cmd.Run()
+	if err != nil {
+		fmt.Printf("Error committing k8s resources %s", err)
+		return
+	}
+
+	cmd = command.Command{
+		Path:    "/usr/bin/git",
+		Options: []string{"push"},
 		Dir:     SourceDir,
 	}
 
