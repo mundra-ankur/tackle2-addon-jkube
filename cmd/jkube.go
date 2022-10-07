@@ -53,7 +53,7 @@ func (r *Jkube) Run() (err error) {
 	}
 
 	// Copy the resources to the output directory
-	err = r.copyResources(groupId, artifactId)
+	err = r.commitResources(groupId, artifactId)
 	if err != nil {
 		return err
 	}
@@ -62,7 +62,7 @@ func (r *Jkube) Run() (err error) {
 
 // output returns output directory.
 func (r *Jkube) output() string {
-	return path.Join(r.application.Bucket, r.Output)
+	return path.Join(SourceDir, "k8sResources")
 }
 
 func (r *Jkube) addJkubePlugin() (groupId string, artifactId string, err error) {
@@ -129,13 +129,13 @@ func (r *Jkube) buildMvnProject() (err error) {
 	return
 }
 
-func (r *Jkube) copyResources(groupId string, artifactId string) (err error) {
+func (r *Jkube) commitResources(groupId string, artifactId string) (err error) {
 	// Copy the k8s resources to the output directory
 	cmd := command.Command{
 		Path: "/usr/bin/cp",
 		Options: []string{"-r",
 			path.Join(SourceDir, "target", "classes", "META-INF", "jkube"),
-			path.Join(r.output(), "manifest")},
+			r.output()},
 		Dir: SourceDir,
 	}
 
@@ -159,6 +159,29 @@ func (r *Jkube) copyResources(groupId string, artifactId string) (err error) {
 	err = cmd.Run()
 	if err != nil {
 		fmt.Printf("Error copying Dockerfile %s", err)
+	}
+
+	cmd = command.Command{
+		Path:    "/usr/bin/git",
+		Options: []string{"add", path.Base(r.output())},
+		Dir:     SourceDir,
+	}
+
+	err = cmd.Run()
+	if err != nil {
+		fmt.Printf("Error adding k8s resources to git %s", err)
+		return
+	}
+
+	cmd = command.Command{
+		Path:    "/usr/bin/git",
+		Options: []string{"commit", "-m", "Add k8s resources", "&&", "/usr/bin/git", "push"},
+		Dir:     SourceDir,
+	}
+
+	err = cmd.Run()
+	if err != nil {
+		fmt.Printf("Error pushing k8s resources %s", err)
 	}
 	return
 }
