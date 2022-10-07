@@ -163,6 +163,28 @@ func (r *Jkube) commitResources(groupId string, artifactId string) (err error) {
 
 	cmd = command.Command{
 		Path:    "/usr/bin/git",
+		Options: []string{"config", "--global", "user.email", "tackle@konveyor.org"},
+		Dir:     SourceDir,
+	}
+
+	err = cmd.Run()
+	if err != nil {
+		fmt.Printf("Error setting git config %s", err)
+	}
+
+	cmd = command.Command{
+		Path:    "/usr/bin/git",
+		Options: []string{"config", "--global", "user.name", "tackle"},
+		Dir:     SourceDir,
+	}
+
+	err = cmd.Run()
+	if err != nil {
+		fmt.Printf("Error setting git config %s", err)
+	}
+
+	cmd = command.Command{
+		Path:    "/usr/bin/git",
 		Options: []string{"add", path.Base(r.output())},
 		Dir:     SourceDir,
 	}
