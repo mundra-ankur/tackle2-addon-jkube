@@ -24,27 +24,11 @@ func init() {
 
 type SoftError = hub.SoftError
 
-// Data Addon data passed in the secret.
-type Data struct {
-	// Output directory within application bucket.
-	Output string `json:"output" binding:"required"`
-}
-
 // main
 func main() {
 	addon.Run(func() (err error) {
-		// Get the addon data associated with the task.
-		d := &Data{}
-		err = addon.DataWith(d)
-		if err != nil {
-			err = &SoftError{Reason: err.Error()}
-			return
-		}
-
 		// Jkube
 		jkube := Jkube{}
-		jkube.Data = d
-
 		// Fetch application.
 		addon.Activity("Fetching application.")
 		application, err := addon.Task.Application()

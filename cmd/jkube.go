@@ -15,8 +15,7 @@ import (
 
 type Jkube struct {
 	application *api.Application
-	*Data
-	repository repository.Repository
+	repository  repository.Repository
 }
 
 func (r *Jkube) Run() (err error) {
